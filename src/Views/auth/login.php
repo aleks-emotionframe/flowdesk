@@ -35,18 +35,11 @@ use App\Middleware\CsrfMiddleware;
             <form method="POST" action="/login">
                 <?= CsrfMiddleware::tokenField() ?>
 
-                <div class="mb-4">
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-Mail</label>
-                    <input type="email" id="email" name="email" required autofocus
-                           class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
-                           placeholder="admin@flowdesk.ch">
-                </div>
-
                 <div class="mb-6">
-                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Passwort</label>
-                    <input type="password" id="password" name="password" required
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Benutzername</label>
+                    <input type="text" id="email" name="email" required autofocus
                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
-                           placeholder="Passwort eingeben">
+                           placeholder="admin" value="admin">
                 </div>
 
                 <button type="submit"

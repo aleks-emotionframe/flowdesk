@@ -25,33 +25,30 @@ class AuthController
         CsrfMiddleware::verify();
 
         $email = trim($_POST['email'] ?? '');
-        $password = $_POST['password'] ?? '';
 
-        if (empty($email) || empty($password)) {
-            $_SESSION['login_error'] = 'Bitte E-Mail und Passwort eingeben.';
+        if (empty($email)) {
+            $_SESSION['login_error'] = 'Bitte Benutzername eingeben.';
             header('Location: /login');
             exit;
         }
 
-        $user = User::findByEmail($email);
-
-        if (!$user || !User::verifyPassword($password, $user['password_hash'])) {
-            $_SESSION['login_error'] = 'Ungültige E-Mail oder Passwort.';
-            header('Location: /login');
+        // Temporärer Test-Login ohne Passwort und ohne DB
+        if ($email === 'admin') {
+            session_regenerate_id(true);
+            $_SESSION['user_id'] = 1;
+            $_SESSION['user'] = [
+                'id' => 1,
+                'name' => 'Admin',
+                'email' => 'admin@flowdesk.ch',
+                'role' => 'admin',
+                'avatar' => null,
+            ];
+            header('Location: /');
             exit;
         }
 
-        session_regenerate_id(true);
-        $_SESSION['user_id'] = (int) $user['id'];
-        $_SESSION['user'] = [
-            'id' => (int) $user['id'],
-            'name' => $user['name'],
-            'email' => $user['email'],
-            'role' => $user['role'],
-            'avatar' => $user['avatar'],
-        ];
-
-        header('Location: /');
+        $_SESSION['login_error'] = 'Ungültiger Benutzername.';
+        header('Location: /login');
         exit;
     }
 
