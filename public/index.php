@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-// Fehler anzeigen (temporär für Debugging)
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
-
 // Autoloading
 require_once __DIR__ . '/../vendor/autoload.php';
 
