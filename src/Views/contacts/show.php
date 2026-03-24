@@ -116,19 +116,53 @@ ob_start();
         <!-- Offerten -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
             <div class="flex items-center justify-between mb-4">
-                <h3 class="text-sm font-semibold text-gray-800">Offerten</h3>
+                <h3 class="text-sm font-semibold text-gray-800">Offerten (<?= count($quotes) ?>)</h3>
                 <a href="/quotes/create?contact_id=<?= $contact['id'] ?>" class="text-xs text-primary-600 hover:text-primary-700 font-medium">+ Neue Offerte</a>
             </div>
-            <p class="text-sm text-gray-400">Noch keine Offerten</p>
+            <?php if (empty($quotes)): ?>
+                <p class="text-sm text-gray-400">Noch keine Offerten</p>
+            <?php else: ?>
+                <div class="space-y-2">
+                    <?php foreach ($quotes as $q): ?>
+                        <a href="/quotes/<?= $q['id'] ?>" class="flex items-center justify-between py-1.5 hover:bg-gray-50 rounded px-2 -mx-2 transition-colors">
+                            <div>
+                                <span class="text-sm font-medium text-gray-900"><?= e($q['quote_number']) ?></span>
+                                <span class="text-xs text-gray-500 ml-2"><?= e($q['title']) ?></span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <?= statusBadge($q['status']) ?>
+                                <span class="text-xs font-medium text-gray-700"><?= formatCHF((float)$q['total']) ?></span>
+                            </div>
+                        </a>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
         </div>
 
         <!-- Rechnungen -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
             <div class="flex items-center justify-between mb-4">
-                <h3 class="text-sm font-semibold text-gray-800">Rechnungen</h3>
+                <h3 class="text-sm font-semibold text-gray-800">Rechnungen (<?= count($invoices) ?>)</h3>
                 <a href="/invoices/create?contact_id=<?= $contact['id'] ?>" class="text-xs text-primary-600 hover:text-primary-700 font-medium">+ Neue Rechnung</a>
             </div>
-            <p class="text-sm text-gray-400">Noch keine Rechnungen</p>
+            <?php if (empty($invoices)): ?>
+                <p class="text-sm text-gray-400">Noch keine Rechnungen</p>
+            <?php else: ?>
+                <div class="space-y-2">
+                    <?php foreach ($invoices as $inv): ?>
+                        <a href="/invoices/<?= $inv['id'] ?>" class="flex items-center justify-between py-1.5 hover:bg-gray-50 rounded px-2 -mx-2 transition-colors">
+                            <div>
+                                <span class="text-sm font-medium text-gray-900"><?= e($inv['invoice_number']) ?></span>
+                                <span class="text-xs text-gray-500 ml-2"><?= e($inv['title']) ?></span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <?= statusBadge($inv['status']) ?>
+                                <span class="text-xs font-medium text-gray-700"><?= formatCHF((float)$inv['total']) ?></span>
+                            </div>
+                        </a>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
         </div>
 
         <!-- Meta -->

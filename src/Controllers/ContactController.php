@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Models\Contact;
+use App\Models\Quote;
+use App\Models\Invoice;
 use App\Middleware\AuthMiddleware;
 use App\Middleware\CsrfMiddleware;
 
@@ -79,6 +81,9 @@ class ContactController
             require __DIR__ . '/../Views/errors/404.php';
             return;
         }
+
+        $quotes = Quote::getByContact((int) $id);
+        $invoices = Invoice::getByContact((int) $id);
 
         $pageTitle = contactName($contact);
         require __DIR__ . '/../Views/contacts/show.php';
