@@ -1,0 +1,59 @@
+name: Deploy to Hostpoint
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: FTP Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create .env file
+        run: |
+          cat > .env << 'ENVEOF'
+          APP_NAME=FlowDesk
+          APP_ENV=production
+          APP_URL=https://flowdesk.emotionframe.ch
+
+          DB_HOST=${{ secrets.DB_HOST }}
+          DB_PORT=3306
+          DB_DATABASE=${{ secrets.DB_DATABASE }}
+          DB_USERNAME=${{ secrets.DB_USERNAME }}
+          DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+
+          SMTP_HOST=${{ secrets.SMTP_HOST }}
+          SMTP_PORT=587
+          SMTP_USER=${{ secrets.SMTP_USER }}
+          SMTP_PASS=${{ secrets.SMTP_PASS }}
+          SMTP_FROM=${{ secrets.SMTP_FROM }}
+
+          COMPANY_NAME=${{ secrets.COMPANY_NAME }}
+          COMPANY_ADDRESS=${{ secrets.COMPANY_ADDRESS }}
+          COMPANY_PHONE=${{ secrets.COMPANY_PHONE }}
+          COMPANY_EMAIL=${{ secrets.COMPANY_EMAIL }}
+          COMPANY_UID=${{ secrets.COMPANY_UID }}
+          COMPANY_IBAN=${{ secrets.COMPANY_IBAN }}
+          COMPANY_BANK=${{ secrets.COMPANY_BANK }}
+          COMPANY_MWST_NR=${{ secrets.COMPANY_MWST_NR }}
+          COMPANY_MWST_SATZ=8.1
+          ENVEOF
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .env.example
+            CLAUDE.md
+            README.md
+            tests/**
