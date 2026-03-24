@@ -1,0 +1,10 @@
+.env
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+/storage/exports/*
+!/storage/exports/.gitkeep
+*.log
+*.cache
