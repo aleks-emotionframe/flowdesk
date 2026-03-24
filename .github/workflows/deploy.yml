@@ -19,19 +19,16 @@ jobs:
           APP_NAME=FlowDesk
           APP_ENV=production
           APP_URL=https://flowdesk.emotionframe.ch
-
           DB_HOST=${{ secrets.DB_HOST }}
           DB_PORT=3306
           DB_DATABASE=${{ secrets.DB_DATABASE }}
           DB_USERNAME=${{ secrets.DB_USERNAME }}
           DB_PASSWORD=${{ secrets.DB_PASSWORD }}
-
           SMTP_HOST=${{ secrets.SMTP_HOST }}
           SMTP_PORT=587
           SMTP_USER=${{ secrets.SMTP_USER }}
           SMTP_PASS=${{ secrets.SMTP_PASS }}
           SMTP_FROM=${{ secrets.SMTP_FROM }}
-
           COMPANY_NAME=${{ secrets.COMPANY_NAME }}
           COMPANY_ADDRESS=${{ secrets.COMPANY_ADDRESS }}
           COMPANY_PHONE=${{ secrets.COMPANY_PHONE }}
