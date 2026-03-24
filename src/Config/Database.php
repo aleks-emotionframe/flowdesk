@@ -14,7 +14,7 @@ class Database
     public static function getConnection(): PDO
     {
         if (self::$instance === null) {
-            $config = require __DIR__ . '/app.php';
+            $config = require __DIR__ . '/../../config/app.php';
             $db = $config['db'];
 
             $dsn = sprintf(
