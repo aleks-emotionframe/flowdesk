@@ -29,6 +29,15 @@ $router->get('/logout', [App\Controllers\AuthController::class, 'logout']);
 // Dashboard (geschützt)
 $router->get('/', [App\Controllers\DashboardController::class, 'index']);
 
+// Kontakte
+$router->get('/contacts', [App\Controllers\ContactController::class, 'index']);
+$router->get('/contacts/create', [App\Controllers\ContactController::class, 'create']);
+$router->post('/contacts', [App\Controllers\ContactController::class, 'store']);
+$router->get('/contacts/{id}', [App\Controllers\ContactController::class, 'show']);
+$router->get('/contacts/{id}/edit', [App\Controllers\ContactController::class, 'edit']);
+$router->post('/contacts/{id}/update', [App\Controllers\ContactController::class, 'update']);
+$router->post('/contacts/{id}/delete', [App\Controllers\ContactController::class, 'destroy']);
+
 // Request auflösen
 $method = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
